@@ -1,5 +1,6 @@
 <%@ page import="com.afjcjsbx.eshop.entity.login.Consumer" %>
 <%@ page import="com.afjcjsbx.eshop.controller.feedback.ManageFeedbackController" %>
+<%@ page import="com.afjcjsbx.eshop.exceptions.DatabaseException" %>
 
 <jsp:useBean id="feedbackBean" scope="session"
              class="com.afjcjsbx.eshop.bean.ManageFeedbackBean" />
@@ -24,10 +25,14 @@
     System.out.println(feedbackBean.getComment());*/
 
 
-    feedbackController.addProductReview(feedbackBean.getProductId(),
-            user.getUsername(),
-            feedbackBean.getRating(),
-            feedbackBean.getComment());
+    try {
+        feedbackController.addProductReview(feedbackBean.getProductId(),
+                user.getUsername(),
+                feedbackBean.getRating(),
+                feedbackBean.getComment());
+    } catch (DatabaseException e) {
+        e.printStackTrace();
+    }
 
 %>
 
@@ -92,7 +97,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <ul>
                     <li class="text"><a href="login.jsp">login</a>
                     <li><div class="shoppingCart box_1">
-                        <a href="shoppingbag.jsp">
+                        <a href="wishlist.jsp">
                             <span class="simpleCart_total"> ciaoo $0.00 </span> (<span id="simpleCart_quantity" class="simpleCart_quantity"> 0 </span>)
                         </a>
                         <p><a href="javascript:;" class="simpleCart_empty">Empty shoppingCart</a></p>

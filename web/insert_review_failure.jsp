@@ -45,7 +45,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 <!--header-->
-<!-- checkout -->
+<!-- purchase -->
 <div class="content">
     <div class="cart-items">
         <div class="container">
@@ -59,7 +59,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 
-    <!-- checkout -->
+    <!-- purchase -->
     <%@ include file="email_subscription_toolbar.jsp" %>
 
 </div>

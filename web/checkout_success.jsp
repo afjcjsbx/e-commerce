@@ -1,19 +1,20 @@
-<%@ page import="com.afjcjsbx.eshop.controller.checkout.CheckoutController" %>
+<%@ page import="com.afjcjsbx.eshop.controller.purchase.ManagePurchaseController" %>
 <%@ page import="com.afjcjsbx.eshop.entity.login.AbstractUser" %>
 <%@ page import="com.afjcjsbx.eshop.entity.login.Consumer" %>
 
 <jsp:useBean id="checkoutBean" scope="session"
-             class="com.afjcjsbx.eshop.bean.CheckoutBean" />
+             class="com.afjcjsbx.eshop.bean.ManagePurchaseBean" />
 
 <%!
-    CheckoutController checkoutController = CheckoutController.getInstance();
+    ManagePurchaseController managePurchaseController = ManagePurchaseController.getInstance();
 %>
 
 <%
     Consumer user = (Consumer) session.getAttribute("currentSessionUser");
     String delivery = request.getParameter("deliveryMethod");
     String payment = request.getParameter("paymentMethod");
-    /*checkoutController.createTransaction();*/
+    /*managePurchaseController.startTimeout(request.getParameter("productId"));
+    /*managePurchaseController.createTransaction();*/
 %>
 
 
@@ -84,7 +85,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <ul>
                     <li class="text"><a href="login.jsp">login</a>
                     <li><div class="shoppingCart box_1">
-                        <a href="shoppingbag.jsp">
+                        <a href="wishlist.jsp">
                             <span class="simpleCart_total"> ciaoo $0.00 </span> (<span id="simpleCart_quantity" class="simpleCart_quantity"> 0 </span>)
                         </a>
                         <p><a href="javascript:;" class="simpleCart_empty">Empty shoppingCart</a></p>
