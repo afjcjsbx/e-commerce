@@ -220,6 +220,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <div class="panel-body">
                             <% List reviewsList = manageFeedbackController.retrieveProductReviews(p.getId()); %>
 
+                            
                             <table id="table" class="table table-hover table-mc-light-blue">
                                 <thead>
                                 <tr>
