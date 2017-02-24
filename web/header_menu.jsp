@@ -124,7 +124,7 @@
 
                             <div class="dropdown-content">
                                 <% if (u.getType() == Roles.PRODUCER) { %>
-                                <a href="insert_advertise.jsp">Sell a product</a>
+                                <a href="insert_product.jsp">Sell a product</a>
                                 <% } %>
                                 <a href="user_profile.jsp">Profile</a>
                                 <a href="logout">Logout</a>
@@ -282,17 +282,7 @@
                 </nav>
                 <!--/.navbar-->
             </div>
-            <div class="search-box">
-                <div id="sb-search" class="sb-search">
-                    <form action="search">
 
-                        <input class="sb-search-input" placeholder="Enter your search term..." type="search"
-                               name="search" id="search">
-                        <input class="sb-search-submit" type="submit" value="">
-                        <span class="sb-icon-search"> </span>
-                    </form>
-                </div>
-            </div>
 
             <!-- search-scripts -->
             <script src="js/classie.js"></script>

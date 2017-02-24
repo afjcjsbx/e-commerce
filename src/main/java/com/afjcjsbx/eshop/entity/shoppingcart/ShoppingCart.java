@@ -17,7 +17,7 @@ public class ShoppingCart extends ShopEntity{
 	private List<Product> shoppingCartItems;
 
 	public ShoppingCart() {
-		shoppingCartItems = new ArrayList<>();
+		shoppingCartItems = new ArrayList<Product>();
 	}
 
 	public String getMessage() {

@@ -1,6 +1,7 @@
 <%@ page import="com.afjcjsbx.eshop.controller.catalogue.CatalogueController" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.afjcjsbx.eshop.entity.catalogue.Category" %>
+<%@ page import="com.afjcjsbx.eshop.controller.product.ManageSaleController" %>
 
 <!--
 Au<!--
@@ -9,6 +10,40 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+
+<jsp:useBean id="manageProductBean" scope="session"
+             class="com.afjcjsbx.eshop.bean.ManageProductBean"/>
+
+<jsp:setProperty name="manageProductBean" property="*"/>
+
+<%
+    if (request.getParameter("submit") != null) {
+/*        System.out.println(feedbackBean.getProductId());
+        System.out.println(feedbackBean.getRating());
+        System.out.println(feedbackBean.getComment());*/
+
+
+        if (manageProductBean.validate()) {
+
+            Producer producer = (Producer) session.getAttribute("currentSessionUser");
+
+            manageProductBean.setProducer_email(producer.getEmail());
+
+            ManageSaleController manageSaleController = new ManageSaleController();
+            manageSaleController.insertProduct(manageProductBean);
+
+%>
+
+<jsp:forward page="insert_product_success.jsp"/>
+
+<%
+
+        }
+    }
+%>
+<!-- Syntax check is successful -> pass to new page -->
+
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -59,15 +94,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="register">
 
 
-
-                <form action="insertproduct" method="post">
+                <form name="form_insert_product" action="insert_product.jsp">
 
 
                     <div class="register-top-grid">
                         <h3>INSERT ADVERTISE</h3>
                         <div class="wow fadeInLeft" data-wow-delay="0.4s">
                             <span>Product Name<label>*</label></span>
-                            <input type="text" name="product_name" required>
+                            <input type="text" name="name" required>
                             <p id="error_product_name"></p>
                         </div>
                         <div style="visibility: hidden">
@@ -76,7 +110,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </div>
                         <div class="wow fadeInRight" data-wow-delay="0.4s">
                             <span>Product Description<label>*</label></span>
-                            <textarea name="product_description" cols="100" rows="12" required></textarea>
+                            <textarea name="description" cols="100" rows="12" required></textarea>
                         </div>
 
                         <div style="visibility: hidden">
@@ -100,7 +134,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="register-bottom-grid">
                         <div class="wow fadeInLeft" data-wow-delay="0.4s">
                             <span>Picture Link<label></label></span>
-                            <input type="text" name="picture_link" required>
+                            <input type="text" name="picture" required>
                         </div>
                         <div class="wow fadeInRight" data-wow-delay="0.4s">
                             <span>Category</span>
@@ -148,14 +182,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <span>Shipment cost<label>*</label></span>
                             <input type="text" name="shipment_cost" required>
                         </div>
-                        <div class="wow fadeInRight" data-wow-delay="0.4s">
+                        <div style="visibility: hidden">
                             <span>Confirm Password<label>*</label></span>
                             <input type="text">
                         </div>
                     </div>
 
-                    <input type="submit" value="submit">
+                    <input type="submit" value="submit" name="submit">
                     <div class="clearfix"></div>
+
+                    <%
+                        if (request.getParameter("submit") != null) {
+                    %>
+                    <tr>
+                        <td colspan=20 align="center">
+                            <span style="color: red; ">Invalid data. Try again</span>
+                        </td>
+                    </tr>
+                    <%
+                        }
+                    %>
+
 
                 </form>
 

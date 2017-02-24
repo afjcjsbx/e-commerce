@@ -1,5 +1,6 @@
 package com.afjcjsbx.eshop.controller.product;
 
+import com.afjcjsbx.eshop.bean.ManageProductBean;
 import com.afjcjsbx.eshop.controller.search.FilteredSearchController;
 import com.afjcjsbx.eshop.entity.advertisement.Advertisement;
 import com.afjcjsbx.eshop.entity.catalogue.Keyword;
@@ -16,15 +17,6 @@ import java.util.List;
 public class ManageSaleController {
 
 
-	/*
-
-	public ReadableProductPrice calculatePrice() {}
-
-	private List<ReadableProduct> relatedItems(){}
-	
-    */
-
-
     public Product displayProduct(String pid) throws SQLException {
 
         PreparedStatement preparedStatement = DataSource.getConnection().prepareStatement(Query.SEARCH_PRDUCT_BY_ID);
@@ -39,24 +31,22 @@ public class ManageSaleController {
     }
 
 
-    public boolean insertProduct(Product product, Producer producer) {
+    public boolean insertProduct(ManageProductBean manageProductBean) {
 
         try {
 
-            PreparedStatement statement = DataSource.getConnection().prepareStatement(Query.ADD_REVIEW);
+            PreparedStatement statement = DataSource.getConnection().prepareStatement(Query.INSERT_PRODUCT);
 
-            statement.setString(1, producer.getEmail());
-            statement.setString(2, product.getCategory().getName());
-            statement.setString(3, product.getName());
-            statement.setString(4, product.getDescription());
-            statement.setString(5, product.getPicture());
-            statement.setString(6, Float.toString(product.getPrice()));
-            statement.setString(7, product.getManufacturer());
-            statement.setString(8, product.isCharitable() ? "1" : "0");
-            statement.setString(9, keywordsToString(product.getKeywords()));
-            statement.setString(10, Integer.toString(product.getDiscountPercentage()));
-            statement.setString(11, Float.toString(product.getShipmentCost()));
-            statement.setString(12, product.isAvailability() ? "1" : "0");
+            statement.setString(1, manageProductBean.getProducer_email());
+            statement.setString(2, manageProductBean.getCategory());
+            statement.setString(3, manageProductBean.getName());
+            statement.setString(4, manageProductBean.getDescription());
+            statement.setString(5, manageProductBean.getPicture());
+            statement.setString(6, manageProductBean.getPrice());
+            statement.setString(7, manageProductBean.getManufacturer());
+            statement.setString(8, manageProductBean.getIsCharitable());
+            statement.setString(9, manageProductBean.getDiscountPercentage());
+            statement.setString(10, manageProductBean.getShipment_cost());
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
@@ -105,13 +95,12 @@ public class ManageSaleController {
     }
 
 
-    public boolean deleteProduct(Advertisement advertisement) {
+    public boolean deleteProduct(String productId) {
 
         try {
 
             PreparedStatement statement = DataSource.getConnection().prepareStatement(Query.DELETE_PRODUCT);
-
-            statement.setString(1, Integer.toString(advertisement.getProductToSell().getId()));
+            statement.setString(1, productId);
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {

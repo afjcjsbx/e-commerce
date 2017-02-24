@@ -20,7 +20,7 @@ public class PriceResearch extends FilteredSearchDecorator {
 
     private ArrayList<Product> filterResearchCity(ArrayList<Product> products) {
 
-        ArrayList<Product> filteredProducts = new ArrayList<>();
+        ArrayList<Product> filteredProducts = new ArrayList<Product>();
 
         for (Product product : products) {
             if (product.getPrice() >= minPrice && product.getPrice() <= maxPrice)

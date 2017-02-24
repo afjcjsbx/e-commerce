@@ -10,19 +10,19 @@ import java.util.ArrayList;
 
 public class CategoryResearch extends FilteredSearchDecorator {
 
-    private Category category;
+    private String category;
 
-    public CategoryResearch(Category category, FilteredSearchController filteredSearch) {
+    public CategoryResearch(String category, FilteredSearchController filteredSearch) {
         super(filteredSearch);
         this.category = category;
     }
 
     private ArrayList<Product> filterResearchCity(ArrayList<Product> products) {
 
-        ArrayList<Product> filteredProducts = new ArrayList<>();
+        ArrayList<Product> filteredProducts = new ArrayList<Product>();
 
         for (Product product : products) {
-            if (product.getCategory().getName().equalsIgnoreCase(category.getName()))
+            if (product.getCategory().getName().equalsIgnoreCase(category))
                 filteredProducts.add(product);
         }
         return filteredProducts;

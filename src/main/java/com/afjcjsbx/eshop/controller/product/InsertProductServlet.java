@@ -45,10 +45,7 @@ public class InsertProductServlet extends HttpServlet {
         product.setPicture(picture_link);
         product.setPrice(Float.parseFloat(price));
 
-        Producer producer = (Producer) retriveUserSession(request);
 
-        ManageSaleController manageSaleController = new ManageSaleController();
-        manageSaleController.insertProduct(product, producer);
         // do something to produce a response
     }
 

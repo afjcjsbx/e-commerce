@@ -10,16 +10,16 @@ import java.util.ArrayList;
 
 public class ManufacturerResearch extends FilteredSearchDecorator {
 
-    private Manufacturer manufacturer;
+    private String manufacturer;
 
-    public ManufacturerResearch(Manufacturer manufacturer, FilteredSearchController filteredSearch) {
+    public ManufacturerResearch(String manufacturer, FilteredSearchController filteredSearch) {
         super(filteredSearch);
         this.manufacturer = manufacturer;
     }
 
     private ArrayList<Product> filterResearchCity(ArrayList<Product> products) {
 
-        ArrayList<Product> filteredProducts = new ArrayList<>();
+        ArrayList<Product> filteredProducts = new ArrayList<Product>();
 
         for (Product product : products) {
             if (product.getManufacturer().equals(manufacturer))

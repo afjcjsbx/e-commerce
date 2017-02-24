@@ -21,13 +21,13 @@ public class Query {
             "FROM products " +
             "WHERE products.ProductID = ?";
 
-    public static final String INSERT_PRODUCT = "INSERT INTO products (ProducerEmail, Category, ProductName, " +
-            "ProductDescription, Picture, Price, Manufacturer, isCharitable, Keywords, DiscountPercentage, " +
-            "ShipmentCost, Availability) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String INSERT_PRODUCT = "INSERT INTO Products (ProducerEmail, Category, ProductName, " +
+            "ProductDescription, Picture, Price, Manufacturer, isCharitable, DiscountPercentage, " +
+            "ShipmentCost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public static final String UPDATE_PRODUCT = "UPDATE products SET ProductName=?, ProductDescription=?, Price=?, DiscountPercentage=? WHERE ProductID=?";
 
-    public static final String DELETE_PRODUCT = "DELETE FROM products WHERE ProductID=?";
+    public static final String DELETE_PRODUCT = "DELETE FROM products WHERE ProductID = ?";
 
     public static final String ADD_REVIEW = "INSERT INTO reviews(productId, username, rating, comment) VALUES (?,?,?,?)";
 
