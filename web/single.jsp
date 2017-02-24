@@ -232,8 +232,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <%
                                     if (reviewsList != null && reviewsList.size() > 0) {
                                         for (int i = 0; i < reviewsList.size(); i++) {
-                                            Object aReviewsList = reviewsList.get(i);
-                                            Review review = (Review) aReviewsList;
+                                            Object o = reviewsList.get(i);
+                                            Review review = (Review) o;
                                 %>
                                 <tr>
                                     <td data-title="ID"><%= review.getUsername()%>

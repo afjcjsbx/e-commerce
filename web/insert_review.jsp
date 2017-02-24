@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
-
+<%@ page import="com.afjcjsbx.eshop.entity.login.Consumer" %>
 <jsp:useBean id="feedbackBean" scope="session"
              class="com.afjcjsbx.eshop.bean.ManageFeedbackBean" />
 
@@ -10,11 +8,14 @@
     if (request.getParameter("submit") != null) {
 /*        System.out.println(feedbackBean.getProductId());
         System.out.println(feedbackBean.getRating());
+        System.out.println(feedbackBean.getComment());
         System.out.println(feedbackBean.getComment());*/
+        AbstractUser user = (Consumer) session.getAttribute("currentSessionUser");
+        feedbackBean.setUsername(user.getUsername());
         if (feedbackBean.validate()) {
 %>
 <!-- Syntax check is successful -> pass to new page -->
-<jsp:forward page="insert_review_success.jsp" />
+<jsp:forward page="insert_review_summary.jsp" />
 <%
         }
     }
@@ -93,7 +94,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Provide your feedback</span>
                         <textarea name="comment" cols="62" rows="8" placeholder="Comment" id="comment"></textarea>
                     </div>
-                    <input name="submit" type="submit" value="Submit">
+                    <input name="submit" type="submit" value="submit">
                     <%
                         if (request.getParameter("submit") != null) {
                     %>

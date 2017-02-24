@@ -1,10 +1,12 @@
 package com.afjcjsbx.eshop.bean;
 
 
+import java.io.Serializable;
+
 /**
  * Created by Davide on 22/02/2017.
  */
-public class CheckoutBean {
+public class CheckoutBean implements Serializable {
     private String deliveryMethod;
     private String paymentMethod;
     private String deliveryAddress;

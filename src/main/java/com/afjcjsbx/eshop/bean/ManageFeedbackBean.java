@@ -3,13 +3,16 @@ package com.afjcjsbx.eshop.bean;
 import com.afjcjsbx.eshop.controller.feedback.ManageFeedbackController;
 import com.afjcjsbx.eshop.entity.feedback.Review;
 import com.afjcjsbx.eshop.entity.catalogue.Product;
+import com.afjcjsbx.eshop.exceptions.DatabaseException;
 
+import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by Davide on 13/02/2017.
  */
-public class ManageFeedbackBean {
+public class ManageFeedbackBean implements Serializable {
 	/**
 	 * La bean ha come attributi gli input dell'utente, inviatigli dallo strato view, in questo caso sarà una pagina JSP
 	 */
@@ -50,68 +53,28 @@ public class ManageFeedbackBean {
 		this.comment = comment;
 	}
 
-	public boolean validate() {
+	public boolean validate() throws DatabaseException {
         // Syntax check
 		if (this.productId == 0 || this.comment == "" || this.rating < 1 || this.rating > 5)
 			return false;
 
+		ManageFeedbackController feedbackController = ManageFeedbackController.getInstance();
+		List<Review> reviewsFromUser = feedbackController.retrieveReviewsFromUser(this.getUsername());
+
+        for (Review t : reviewsFromUser) {
+            if(t.getProductId() == this.getProductId())
+                return false;
+        }
 
         return true;
     }
 
-
-
-
-
-
-	/*private String username;
-	private String password;
-	private String commento;
-	private int idLocazione;
-
-	setters e getters
-
-	*//**
-	 * Metodo per lasciare un feedback su di una locazione
-	 * 
-	 * @return true se il feedback � stato inserito correttamente, false
-	 *         altrimenti
-	 *//*
-	public boolean commentaLocazione() {
-		return ControllerFeedback.getInstance().commentaLocazione(this);
-	}
-
-	*//**
-	 * Ricerca di una locazione passandogli il suo nome
-	 * 
-	 * @param nomeLocazione
-	 *            nome della locazione da ricercare
-	 * @return ritorna la locazione con quel nome, null altrimenti
-	 *//*
-	public Locazione cercaLocazioneDaNome(String nomeLocazione) {
-		return ControllerFeedback.getInstance().cercaLocazioneDaNome(nomeLocazione);
-	}
-
-	*//**
-	 * Metodo per cercare i feedback su una determinata locazione
-	 * 
-	 * @param locazioneId
-	 *            id della locazione su cui effettuare la ricerca
-	 * @return ritorna la lista dei feedback di una locazione, null altrimenti
-	 *//*
-	public List<Feedback> dammiFeedback(int locazioneId) {
-
-		return ControllerFeedback.getInstance().dammiFeedback(locazioneId);
-	}
-
-	*//**
-	 * Controllo sull'autenticazione di un'utente
-	 * 
-	 * @return true se le credenziali sono corrette, false altrimenti
-	 *//*
-	public boolean verificaUtente() {
-
-		return ControllerFeedback.getInstance().verificaUtente(this);
-	}*/
-
+    public static void main(String[] args) throws DatabaseException {
+        ManageFeedbackBean bean = new ManageFeedbackBean();
+        bean.setComment("a");
+        bean.setProductId(2);
+        bean.setRating(3);
+        bean.setUsername("Luca");
+        System.out.print(bean.validate());
+    }
 }
