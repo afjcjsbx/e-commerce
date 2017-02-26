@@ -6,19 +6,22 @@
 
 <%
     if (request.getParameter("submit") != null) {
-/*        System.out.println(feedbackBean.getProductId());
-        System.out.println(feedbackBean.getRating());
-        System.out.println(feedbackBean.getComment());
-        System.out.println(feedbackBean.getComment());*/
         AbstractUser user = (Consumer) session.getAttribute("currentSessionUser");
+        if (user == null || user.getType() != Roles.CONSUMER){ // l'utente consumatore deve essere loggato
+%>
+<jsp:forward page="404.jsp" />
+<%
+        }
         feedbackBean.setUsername(user.getUsername());
         if (feedbackBean.validate()) {
+
 %>
 <!-- Syntax check is successful -> pass to new page -->
 <jsp:forward page="insert_review_summary.jsp" />
 <%
+            }
+
         }
-    }
 %>
 
 
@@ -76,7 +79,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <div class="main-1">
         <div class="container">
             <div class="contact">
-            <h2>Insert review</h2>
+                <h2>Insert review</h2>
             </div>
             <div class="col-md-6 contact-right">
                 <form name="formInsertReview" action="insert_review.jsp" method="get">
@@ -98,11 +101,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <%
                         if (request.getParameter("submit") != null) {
                     %>
-                            <tr>
-                                <td colspan=20 align="center">
-                                    <span style="color: red; ">Invalid data. Try again</span>
-                                </td>
-                            </tr>
+                    <tr>
+                        <td colspan=20 align="center">
+                            <span style="color: red; ">Invalid data. Try again</span>
+                        </td>
+                    </tr>
                     <%
                         }
                     %>

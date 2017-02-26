@@ -16,7 +16,7 @@ public class DataSource {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String user = "root";
-            String password = "trulli15";
+            String password = "root";
             connection = DriverManager.getConnection(JDBC_CONNECTION_URL, user, password);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

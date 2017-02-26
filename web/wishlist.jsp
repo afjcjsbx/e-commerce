@@ -142,7 +142,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <br><br>
 
                     <div align="right">
-                        <a class="acount-btn" onclick=""
+
+                        <a class="acount-btn" href="checkout.jsp?pid=<%=product.getId()%>"
                            style="cursor: pointer;">Checkout</a>
                     </div>
 
