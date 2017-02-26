@@ -2,6 +2,36 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="com.afjcjsbx.eshop.entity.login.Consumer" %>
 <%@ page import="com.afjcjsbx.eshop.constants.Constants" %>
+
+
+<jsp:useBean id="searchBean" scope="session"
+             class="com.afjcjsbx.eshop.entity.search.SearchBean"/>
+
+<jsp:setProperty name="searchBean" property="*"/>
+
+<%
+    if (request.getParameter("submit") != null) {
+/*        System.out.println(feedbackBean.getProductId());
+        System.out.println(feedbackBean.getRating());
+        System.out.println(feedbackBean.getComment());*/
+
+        searchBean.setSearch(request.getParameter("search"));
+
+        if (searchBean.validate()) {
+%>
+<!-- Syntax check is successful -> pass to new page -->
+<jsp:forward page="products.jsp"/>
+<%
+} else {
+%>
+<jsp:forward page="categories.jsp"/>
+<%
+
+        }
+    }
+%>
+
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -31,16 +61,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--header-->
 <div class="subscribe">
     <div class="container">
+        <br><br><br><br>
         <div class="subscribe1">
             <h4>Search in eshop</h4>
         </div>
         <div class="subscribe2">
-            <form action="search">
-                <input type="text" class="text" name="search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search...';}">
-                <input type="submit" value="SEARCH">
+            <form>
+                <input type="text" class="text" name="search" onfocus="this.value = '';"
+                       onblur="if (this.value == '') {this.value = 'Search...';}">
+                <input type="submit" name="submit" value="SEARCH">
             </form>
         </div>
         <div class="clearfix"></div>
+        <br><br><br><br>
     </div>
 </div>
 <br><br>
@@ -48,317 +81,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="banner-section">
     <div class="container">
         <div class="banner-grids">
-            <div class="col-md-6 banner-grid">
-                <h2>the latest collections</h2>
+                <h2>The latest collections</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et dolore magna aliqua.</p>
+
+            <br><br>
                 <a href="products.jsp" class="button"> shop now </a>
-            </div>
-            <div class="col-md-6 banner-grid1">
-                <img src="images/p2.png" class="img-responsive" alt=""/>
-            </div>
+
             <div class="clearfix"></div>
         </div>
     </div>
+
+    <br><br><br><br>
 </div>
-<div class="banner-bottom">
-    <div class="gallery-cursual">
-        <!--requried-jsfiles-for owl-->
-        <script src="js/owl.carousel.js"></script>
-        <script>
-            $(document).ready(function () {
-                $("#owl-demo").owlCarousel({
-                    items: 3,
-                    lazyLoad: true,
-                    autoPlay: true,
-                    pagination: false,
-                });
-            });
-        </script>
-        <!--requried-jsfiles-for owl -->
-        <!--start content-slider-->
-        <div id="owl-demo" class="owl-carousel text-center">
-            <div class="item">
-                <img class="lazyOwl" data-src="images/b1.jpg" alt="name">
-                <div class="item-info">
-                    <h5>Lorem ipsum</h5>
-                </div>
-            </div>
-            <div class="item">
-                <img class="lazyOwl" data-src="images/b2.jpg" alt="name">
-                <div class="item-info">
-                    <h5>Lorem ipsum</h5>
-                </div>
-            </div>
-            <div class="item">
-                <img class="lazyOwl" data-src="images/b3.jpg" alt="name">
-                <div class="item-info">
-                    <h5>Lorem ipsum</h5>
-                </div>
-            </div>
-            <div class="item">
-                <img class="lazyOwl" data-src="images/b4.jpg" alt="name">
-                <div class="item-info">
-                    <h5>Lorem ipsum</h5>
-                </div>
-            </div>
-            <div class="item">
-                <img class="lazyOwl" data-src="images/b1.jpg" alt="name">
-                <div class="item-info">
-                    <h5>Lorem ipsum</h5>
-                </div>
-            </div>
-            <div class="item">
-                <img class="lazyOwl" data-src="images/b6.jpg" alt="name">
-                <div class="item-info">
-                    <h5>Lorem ipsum</h5>
-                </div>
-            </div>
-            <div class="item">
-                <img class="lazyOwl" data-src="images/b7.jpg" alt="name">
-                <div class="item-info">
-                    <h5>Lorem ipsum</h5>
-                </div>
-            </div>
-            <div class="item">
-                <img class="lazyOwl" data-src="images/b1.jpg" alt="name">
-                <div class="item-info">
-                    <h5>Lorem ipsum</h5>
-                </div>
-            </div>
-            <div class="item">
-                <img class="lazyOwl" data-src="images/b2.jpg" alt="name">
-                <div class="item-info">
-                    <h5>Lorem ipsum</h5>
-                </div>
-            </div>
-            <div class="item">
-                <img class="lazyOwl" data-src="images/b3.jpg" alt="name">
-                <div class="item-info">
-                    <h5>Lorem ipsum</h5>
-                </div>
-            </div>
-        </div>
-        <!--sreen-gallery-cursual-->
-    </div>
-</div>
-<div class="gallery">
-    <div class="container">
-        <h3>Featured products</h3>
-        <div class="gallery-grids">
-            <div class="col-md-3 gallery-grid ">
-                <a href="products.jsp"><img src="images/g1.png" class="img-responsive" alt=""/>
-                    <div class="gallery-info">
-                        <div class="quick">
-                            <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
-                        </div>
-                    </div>
-                </a>
-                <div class="galy-info">
-                    <p>Amour Women’s Amour...</p>
-                    <div class="galry">
-                        <div class="prices">
-                            <h5 class="item_price">$95.00</h5>
-                        </div>
-                        <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 gallery-grid">
-                <a href="products.jsp"><img src="images/g2.png" class="img-responsive" alt=""/>
-                    <div class="gallery-info">
-                        <div class="quick">
-                            <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
-                        </div>
-                    </div>
-                </a>
-                <div class="galy-info">
-                    <p>Amour Women’s Amour...</p>
-                    <div class="galry">
-                        <div class="prices">
-                            <h5 class="item_price">$95.00</h5>
-                        </div>
-                        <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 gallery-grid">
-                <a href="products.jsp"><img src="images/g3.png" class="img-responsive" alt=""/>
-                    <div class="gallery-info">
-                        <div class="quick">
-                            <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
-                        </div>
-                    </div>
-                </a>
-                <div class="galy-info">
-                    <p>Amour Women’s Amour...</p>
-                    <div class="galry">
-                        <div class="prices">
-                            <h5 class="item_price">$95.00</h5>
-                        </div>
-                        <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 gallery-grid">
-                <a href="products.jsp"><img src="images/g4.png" class="img-responsive" alt=""/>
-                    <div class="gallery-info">
-                        <div class="quick">
-                            <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
-                        </div>
-                    </div>
-                </a>
-                <div class="galy-info">
-                    <p>Amour Women’s Amour...</p>
-                    <div class="galry">
-                        <div class="prices">
-                            <h5 class="item_price">$95.00</h5>
-                        </div>
-                        <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 gallery-grid ">
-                <a href="products.jsp"><img src="images/g5.jpg" class="img-responsive" alt=""/>
-                    <div class="gallery-info">
-                        <div class="quick">
-                            <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
-                        </div>
-                    </div>
-                </a>
-                <div class="galy-info">
-                    <p>Amour Women’s Amour...</p>
-                    <div class="galry">
-                        <div class="prices">
-                            <h5 class="item_price">$95.00</h5>
-                        </div>
-                        <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 gallery-grid">
-                <a href="products.jsp"><img src="images/g6.jpg" class="img-responsive" alt=""/>
-                    <div class="gallery-info">
-                        <div class="quick">
-                            <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
-                        </div>
-                    </div>
-                </a>
-                <div class="galy-info simpleCart_shelfItem">
-                    <p>Amour Women’s Amour...</p>
-                    <div class="galry">
-                        <div class="prices">
-                            <h5 class="item_price">$95.00</h5>
-                        </div>
-                        <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 gallery-grid">
-                <a href="products.jsp"><img src="images/g7.jpg" class="img-responsive" alt=""/>
-                    <div class="gallery-info">
-                        <div class="quick">
-                            <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
-                        </div>
-                    </div>
-                </a>
-                <div class="galy-info simpleCart_shelfItem">
-                    <p>Amour Women’s Amour...</p>
-                    <div class="galry">
-                        <div class="prices">
-                            <h5 class="item_price">$95.00</h5>
-                        </div>
-                        <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 gallery-grid">
-                <a href="products.jsp"><img src="images/g8.jpg" class="img-responsive" alt=""/>
-                    <div class="gallery-info">
-                        <div class="quick">
-                            <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
-                        </div>
-                    </div>
-                </a>
-                <div class="galy-info simpleCart_shelfItem">
-                    <p>Amour Women’s Amour...</p>
-                    <div class="galry">
-                        <div class="prices">
-                            <h5 class="item_price">$95.00</h5>
-                        </div>
-                        <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-</div>
-<%@ include file="email_subscription_toolbar.jsp" %>
 
 <!--footer-->
 <%@ include file="footer_menu.jsp" %>

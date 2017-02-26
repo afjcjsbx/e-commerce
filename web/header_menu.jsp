@@ -1,8 +1,11 @@
 <%@ page import="com.afjcjsbx.eshop.controller.shoppingcart.ShoppingCartController" %>
 <%@ page import="com.afjcjsbx.eshop.entity.login.Guest" %>
-<%@ page import="com.afjcjsbx.eshop.entity.login.Producer" %>
 <%@ page import="com.afjcjsbx.eshop.enums.Roles" %>
 <%@ page import="com.afjcjsbx.eshop.entity.login.AbstractUser" %>
+<%@ page import="com.afjcjsbx.eshop.controller.login.LoginController" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="com.afjcjsbx.eshop.entity.shoppingcart.ShoppingCartItem" %>
+<%@ page import="com.afjcjsbx.eshop.entity.shoppingcart.ShoppingCart" %>
 <%--
   Created by IntelliJ IDEA.
   Guest: afjcjsbx
@@ -11,6 +14,44 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
+<jsp:useBean id="loginBean" scope="session"
+             class="com.afjcjsbx.eshop.bean.LoginBean"/>
+
+<jsp:setProperty name="loginBean" property="*"/>
+
+<%
+    if (request.getParameter("submit_login") != null) {
+
+        if (loginBean.validate()) {
+
+            AbstractUser user = null;
+            try {
+                user = LoginController.retrieveUserInfoByEmailAndPassword(loginBean.getEmail(), loginBean.getPassword());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            //Compio il carrello della sessione precedente
+            if (user != null) {
+
+                if (user.isValid()) {
+
+                    session.setAttribute("currentSessionUser", user);
+                    response.sendRedirect("index.jsp"); //logged-in page
+
+                } else {
+                    response.sendRedirect("invalid_login.jsp"); //error page
+                }
+
+            }
+
+
+        }
+    }
+%>
+
+
 <%
     ShoppingCartController shoppingCartController = new ShoppingCartController();
 
@@ -35,7 +76,7 @@
             <h2>Login</h2>
             <br>
             <p><b>I'm already an ESHOP user</b><br>Enter your e-mail address and password to log into the website.</p>
-            <form action="login">
+            <form action="">
                 <input type="text" name="email">
                 <br><br>
                 <input type="password" name="password">
@@ -44,7 +85,7 @@
                 <br>
                 <br>
                 <div class="contact-right">
-                    <input type="submit" value="Login">
+                    <input type="submit" name="submit_login" value="Login">
                 </div>
 
             </form>
@@ -57,7 +98,7 @@
             <form action="registration.jsp">
                 <div class="contact-right">
 
-                    <input type="submit" value="Create Account">
+                    <input type="submit" name="submit_registration" value="Create Account">
                 </div>
             </form>
 
@@ -124,10 +165,10 @@
 
                             <div class="dropdown-content">
                                 <% if (u.getType() == Roles.PRODUCER) { %>
-                                <a href="insert_advertise.jsp">Sell a product</a>
+                                <a href="insert_product.jsp">Sell a product</a>
                                 <% } %>
                                 <a href="user_profile.jsp">Profile</a>
-                                <a href="logout">Logout</a>
+                                <a href="logout.jsp">Logout</a>
 
                             </div>
                         </div>
@@ -138,7 +179,7 @@
                     <li>
                         <div class="cart box_1">
                             <a href="wishlist.jsp">
-                                <span class="simpleCart_total"> <% out.print(shoppingCartController.getCartPrice(request)); %> </span>
+                                <span class="simpleCart_total"> <% out.print(shoppingCartController.getCartPrice(request)); %> €</span>
                                 (<span id="simpleCart_quantity"
                                        class="simpleCart_quantity"><% out.print(shoppingCartController.productCount(request)); %></span>)
                             </a>
@@ -282,17 +323,7 @@
                 </nav>
                 <!--/.navbar-->
             </div>
-            <div class="search-box">
-                <div id="sb-search" class="sb-search">
-                    <form action="search">
 
-                        <input class="sb-search-input" placeholder="Enter your search term..." type="search"
-                               name="search" id="search">
-                        <input class="sb-search-submit" type="submit" value="">
-                        <span class="sb-icon-search"> </span>
-                    </form>
-                </div>
-            </div>
 
             <!-- search-scripts -->
             <script src="js/classie.js"></script>

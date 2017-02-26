@@ -65,7 +65,7 @@ public class LoginController extends AbstractController {
     }
 
 
-    static AbstractUser retrieveUserInfoByEmailAndPassword(String email, String password) throws SQLException {
+    public static AbstractUser retrieveUserInfoByEmailAndPassword(String email, String password) throws SQLException {
 
         PreparedStatement preparedStatement = DataSource.getConnection().prepareStatement(Query.FIND_REGISTERED_USER);
         preparedStatement.setString(1, email);

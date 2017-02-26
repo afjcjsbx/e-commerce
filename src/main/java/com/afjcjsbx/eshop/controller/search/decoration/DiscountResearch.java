@@ -18,7 +18,7 @@ public class DiscountResearch extends FilteredSearchDecorator {
 
     private ArrayList<Product> filterResearchDiscount(ArrayList<Product> products) {
 
-        ArrayList<Product> filteredProducts = new ArrayList<>();
+        ArrayList<Product> filteredProducts = new ArrayList<Product>();
 
         for (Product product : products) {
             if (product.getDiscountPercentage() >= minDiscount) {

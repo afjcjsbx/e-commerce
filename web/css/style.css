@@ -598,7 +598,7 @@ ul.rating li a:hover, .price_single a:hover, ul.size li a:hover {
     border-top: 1px solid #CCC0C0;
     border-bottom: 1px solid #CCC0C0;
     margin-top: 0em;
-    margin-bottom: 2em;
+    margin-bottom: 0em;
 }
 
 .subscribe h4 {

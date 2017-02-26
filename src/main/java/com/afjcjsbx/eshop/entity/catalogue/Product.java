@@ -41,6 +41,7 @@ public class Product extends Entity{
 		this.reviews = reviews;
 		this.isCharitable = isCharitable;
 		this.availability = availability;
+
 	}
 
 	public Product(String name, String description, String picture, Float price, Integer discountPercentage, Float shipmentCost, AbstractUser producer, Category category, String manufacturer, List<Keyword> keywords, List<Review> reviews, boolean isCharitable, boolean availability) {

@@ -9,6 +9,7 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+
 <%@ page language="java" session="true" %>
 <!DOCTYPE HTML>
 <html>
@@ -61,18 +62,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 <%
-    // Get session creation time.
-    Date createTime = new Date(session.getCreationTime());
-    // Get last access time of this web page.
-    Date lastAccessTime = new Date(session.getLastAccessedTime());
 
 
-    //Connection c = DataSource.getConnection();
+    if (request.getParameter("submit_remove_to_cart") != null) {
 
-    System.out.println("Cart price: " + shoppingCartController.getCartPrice(request));
-    System.out.println("Cart count: " + shoppingCartController.productCount(request));
+        int value = Integer.parseInt(request.getParameter("submit_remove_to_cart"));
+        shoppingCartController.removeProduct(request, value);
+
+        response.sendRedirect("wishlist.jsp"); //reload page
+
+    }
 
 %>
+
 
 
 <!--header-->
@@ -82,7 +84,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="container">
 
             <h2>My Shopping Bag (<%= shoppingCartController.productCount(request) %>)</h2>
-
 
             <%
 
@@ -111,8 +112,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                 <div align="right">
 
-                    <a class="acount-btn" onclick="location.href='removetocart?productid=<%= product.getId() %>';"
-                       style="cursor: pointer;">x</a>
+                    <form id="submit_remove_to_cart" action="">
+
+                        <a class="acount-btn" onclick="document.getElementById('submit_remove_to_cart').submit();"
+                           style="cursor: pointer;">x</a>
+                        <input type="hidden" name="submit_remove_to_cart" value="<%= product.getId() %>">
+                    </form>
+
+
 
                 </div>
 
@@ -135,7 +142,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <br><br>
 
                     <div align="right">
-                        <a class="acount-btn" onclick="location.href='addtocart?productid=<%= product.getId() %>';"
+                        <a class="acount-btn" onclick=""
                            style="cursor: pointer;">Checkout</a>
                     </div>
 

@@ -10,13 +10,14 @@ public class SearchBean {
 
     private String search = "";
     private String category = "";
-    private int minPrice;
-    private int maxPrice;
+    private int minPrice = 0;
+    private int maxPrice = 9999;
     private int minDiscount;
     private int maxDiscount;
     private String[] types = null;
     private String[] brands = null;
-    private ArrayList<Product> result = new ArrayList<>();
+    private String manufacturer;
+    private ArrayList<Product> result = new ArrayList<Product>();
 
 
 
@@ -84,6 +85,15 @@ public class SearchBean {
         this.brands = brands;
     }
 
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
     public ArrayList<Product> getResult() {
         return result;
     }
@@ -92,6 +102,10 @@ public class SearchBean {
         this.result = result;
     }
 
+    public boolean validate() {
+        // Syntax check
+        return this.search != "";
+    }
 
 
 }

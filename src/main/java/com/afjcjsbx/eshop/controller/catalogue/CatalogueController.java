@@ -3,6 +3,7 @@ package com.afjcjsbx.eshop.controller.catalogue;
 
 
 import com.afjcjsbx.eshop.entity.catalogue.Category;
+import com.afjcjsbx.eshop.entity.catalogue.Product;
 import com.afjcjsbx.eshop.persistence.DataSource;
 import com.afjcjsbx.eshop.persistence.Query;
 
@@ -34,7 +35,7 @@ public class CatalogueController {
 
         System.err.println("query:" + preparedStatement.toString());
 
-        ArrayList<Category> categories = new ArrayList<>();
+        ArrayList<Category> categories = new ArrayList<Category>();
 
         while (resultSet.next()) {
             Category c = retrieveCategoryInfoFromDatabaseQuery(resultSet);

@@ -1,6 +1,7 @@
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.afjcjsbx.eshop.controller.search.FilteredSearchController" %>
 <%@ page import="com.afjcjsbx.eshop.entity.catalogue.Product" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="java.util.List" %>
 <!--
 Au<!--
 Author: W3layouts
@@ -8,6 +9,35 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+
+<jsp:useBean id="searchBean" scope="session"
+             class="com.afjcjsbx.eshop.entity.search.SearchBean"/>
+
+<jsp:setProperty name="searchBean" property="*"/>
+
+<%
+
+    if (request.getParameter("search") != null) {
+
+        if(request.getParameter("checkbox_discount") != null){
+            searchBean.setMinDiscount(Integer.parseInt(request.getParameter("checkbox_discount")));
+        }
+
+        if (searchBean.validate()) {
+            FilteredSearchController filteredSearchController = new FilteredSearchController();
+            try {
+                searchBean.setResult(filteredSearchController.startResearch(searchBean));
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+%>
+
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -48,7 +78,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!---728x90--->
 <div class="content">
 
-    <form id="submit_search" action="search" method="get">
+    <form id="search_form" action="products.jsp">
 
         <div class="subscribe">
             <div class="container">
@@ -56,7 +86,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <h4>Search in eshop</h4>
                 </div>
                 <div class="subscribe2">
-                    <input type="text" class="text" name="search" value="<%= request.getAttribute("search") %>"
+                    <input type="text" class="text" name="search" value="<%= request.getParameter("search") %>"
                            onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search...';}">
                     <input type="submit" value="SEARCH">
                 </div>
@@ -182,39 +212,39 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <div class="col col-4">
 
                                     <label class="checkbox"><input type="checkbox" name="checkbox_discount" value="10"
-                                                                   onchange="document.getElementById('submit_search').submit()"><i></i>Up
+                                                                   onchange="document.getElementById('search_form').submit()"><i></i>Up
                                         to 10%</label>
 
                                     <label class="checkbox"><input type="checkbox" name="checkbox_discount" value="20"
-                                                                   onchange="document.getElementById('submit_search').submit()"><i></i>Up
+                                                                   onchange="document.getElementById('search_form').submit()"><i></i>Up
                                         to 20%</label>
 
                                     <label class="checkbox"><input type="checkbox" name="checkbox_discount" value="30"
-                                                                   onchange="document.getElementById('submit_search').submit()"><i></i>Up
+                                                                   onchange="document.getElementById('search_form').submit()"><i></i>Up
                                         to 30%</label>
 
                                     <label class="checkbox"><input type="checkbox" name="checkbox_discount" value="40"
-                                                                   onchange="document.getElementById('submit_search').submit()"><i></i>Up
+                                                                   onchange="document.getElementById('search_form').submit()"><i></i>Up
                                         to 40%</label>
 
                                     <label class="checkbox"><input type="checkbox" name="checkbox_discount" value="50"
-                                                                   onchange="document.getElementById('submit_search').submit()"><i></i>Up
+                                                                   onchange="document.getElementById('search_form').submit()"><i></i>Up
                                         to 50%</label>
 
                                     <label class="checkbox"><input type="checkbox" name="checkbox_discount" value="60"
-                                                                   onchange="document.getElementById('submit_search').submit()"><i></i>Up
+                                                                   onchange="document.getElementById('search_form').submit()"><i></i>Up
                                         to 60%</label>
 
                                     <label class="checkbox"><input type="checkbox" name="checkbox_discount" value="70"
-                                                                   onchange="document.getElementById('submit_search').submit()"><i></i>Up
+                                                                   onchange="document.getElementById('search_form').submit()"><i></i>Up
                                         to 70%</label>
 
                                     <label class="checkbox"><input type="checkbox" name="checkbox_discount" value="80"
-                                                                   onchange="document.getElementById('submit_search').submit()"><i></i>Up
+                                                                   onchange="document.getElementById('search_form').submit()"><i></i>Up
                                         to 80%</label>
 
                                     <label class="checkbox"><input type="checkbox" name="checkbox_discount" value="90"
-                                                                   onchange="document.getElementById('submit_search').submit()"><i></i>Up
+                                                                   onchange="document.getElementById('search_form').submit()"><i></i>Up
                                         to 90%</label>
 
                                 </div>
@@ -315,13 +345,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                         <%
 
-                            List productlist = (ArrayList) request.getAttribute("productlist");
+                            if (searchBean.getResult() != null && searchBean.getResult().size() > 0) {
 
-                            if (productlist != null && productlist.size() > 0) {
+                                for (int i = 0; i < searchBean.getResult().size(); i++) {
 
-                                for (int i = 0; i < productlist.size(); i++) {
-
-                                    Product product = (Product) productlist.get(i);
+                                    Product product = (Product) searchBean.getResult().get(i);
 
                         %>
 
@@ -371,6 +399,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
 
     </form>
+
+    <br><br><br>
 
 </div>
 

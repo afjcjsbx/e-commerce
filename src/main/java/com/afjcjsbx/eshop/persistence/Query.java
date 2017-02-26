@@ -29,7 +29,7 @@ public class Query {
 
     public static final String UPDATE_PRODUCT_AVAILABILITY = "UPDATE products SET Availability=? WHERE ProductID=?";
 
-    public static final String DELETE_PRODUCT = "DELETE FROM products WHERE ProductID=?";
+    public static final String DELETE_PRODUCT = "DELETE FROM products WHERE ProductID = ?";
 
     public static final String ADD_REVIEW = "INSERT INTO reviews(productId, username, rating, comment) VALUES (?,?,?,?)";
 

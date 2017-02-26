@@ -7,10 +7,10 @@ import com.afjcjsbx.eshop.controller.search.decoration.ManufacturerResearch;
 import com.afjcjsbx.eshop.controller.search.decoration.PriceResearch;
 import com.afjcjsbx.eshop.entity.catalogue.Category;
 import com.afjcjsbx.eshop.entity.catalogue.Keyword;
-import com.afjcjsbx.eshop.entity.catalogue.Manufacturer;
 import com.afjcjsbx.eshop.entity.catalogue.Product;
-import com.afjcjsbx.eshop.entity.login.AbstractUser;
 import com.afjcjsbx.eshop.entity.feedback.Review;
+import com.afjcjsbx.eshop.entity.login.AbstractUser;
+import com.afjcjsbx.eshop.entity.search.SearchBean;
 import com.afjcjsbx.eshop.persistence.DataSource;
 import com.afjcjsbx.eshop.persistence.Query;
 
@@ -18,24 +18,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class FilteredSearchController {
 
-
-    protected ArrayList<Product> search(String search) throws SQLException {
-
-        PreparedStatement preparedStatement = DataSource.getConnection().prepareStatement(Query.SEARCH_PRODUCTS_BY_NAME);
-        preparedStatement.setString(1, "%" + search + "%");
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        ArrayList<Product> products = new ArrayList<>();
-
-        while (resultSet.next()) {
-            products.add(retrieveProductInfoFromDatabaseQuery(resultSet));
-        }
-        return products;
-    }
 
 
     public static Product retrieveProductInfoFromDatabaseQuery(ResultSet resultSet) throws SQLException {
@@ -81,45 +66,32 @@ public class FilteredSearchController {
     }
 
 
-    public List<Product> searchByString(String search) {
+    protected ArrayList<Product> search(String search) throws SQLException {
 
-        List<Product> result = new ArrayList<>();
+        PreparedStatement preparedStatement = DataSource.getConnection().prepareStatement(Query.SEARCH_PRODUCTS_BY_NAME);
+        preparedStatement.setString(1, "%" + search + "%");
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-        try {
-            PreparedStatement preparedStatement = DataSource.getConnection().prepareStatement(Query.SEARCH_PRODUCTS_BY_NAME);
-            preparedStatement.setString(1, "%" + search + "%");
-            ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<Product> products = new ArrayList<Product>();
 
-            System.err.println("query:" + preparedStatement.toString());
-
-            while (resultSet.next()) {
-
-                Product p = retrieveProductInfoFromDatabaseQuery(resultSet);
-                result.add(p);
-            }
-
-        } catch (Exception e) {
-            System.err.println("Got an exception! ");
-            System.err.println(e.getMessage());
+        while (resultSet.next()) {
+            products.add(retrieveProductInfoFromDatabaseQuery(resultSet));
         }
-
-        return result;
+        return products;
     }
 
 
 
-
-    public ArrayList<Product> startResearch(String search, Category category, Integer minPrice, Integer maxPrice, Integer minDiscount,
-                                            Integer maxDisount, Manufacturer manufacturer) throws SQLException {
+    public ArrayList<Product> startResearch(SearchBean searchBean) throws SQLException {
 
         FilteredSearchController fsc = new FilteredSearchController();
-        fsc = new PriceResearch(minPrice, maxPrice, fsc);
+        fsc = new PriceResearch(searchBean.getMinPrice(), searchBean.getMaxPrice(), fsc);
 
-        if (category != null) fsc = new CategoryResearch(category, fsc);
-        if (minDiscount > 0) fsc = new DiscountResearch(minDiscount, fsc);
-        if (manufacturer != null) fsc = new ManufacturerResearch(manufacturer, fsc);
+        if (!searchBean.getCategory().isEmpty()) fsc = new CategoryResearch(searchBean.getCategory(), fsc);
+        if (searchBean.getMinDiscount() > 0) fsc = new DiscountResearch(searchBean.getMinDiscount(), fsc);
+        //if (!searchBean.getManufacturer().isEmpty() || searchBean.getManufacturer() != null) fsc = new ManufacturerResearch(searchBean.getManufacturer(), fsc);
 
-        return fsc.search(search);
+        return fsc.search(searchBean.getSearch());
 
     }
 
