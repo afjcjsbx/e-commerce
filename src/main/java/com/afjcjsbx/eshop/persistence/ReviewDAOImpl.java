@@ -41,15 +41,6 @@ public class ReviewDAOImpl implements ReviewDAO {
 
             stm.close();
 
-            /*for (Feedback feedback1 : location.getFeedbacks())
-                if (feedback1.getUsername().equals(user.getUsername())) {
-                    location.getFeedbacks().remove(feedback1);
-                    break;
-                }
-
-            this.location.getFeedbacks().add(feedback);
-            filteredSearchResultLocation.loadFeedback(location);*/
-
         } catch (SQLException e) {
             throw new DatabaseException("Cannot write on database");
         }
@@ -72,9 +63,6 @@ public class ReviewDAOImpl implements ReviewDAO {
                         rs.getString("username"),
                         rs.getInt("rating"),
                         rs.getString("comment"));
-                /*lista.add(new Review(rs.getInt(FEEDBACK_ID), rs.getInt(LocazioneDAO.ID),
-                        new UtenteCliente(rs.getString(UtenteGenericoDAO.CAMPO_NICKNAME)), rs.getString(COMMENTO)));
-                */
                 reviewsList.add(review);
             }
             stm.close();

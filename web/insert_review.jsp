@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
-
+<%@ page import="com.afjcjsbx.eshop.entity.login.Consumer" %>
 <jsp:useBean id="feedbackBean" scope="session"
              class="com.afjcjsbx.eshop.bean.ManageFeedbackBean" />
 
@@ -8,16 +6,22 @@
 
 <%
     if (request.getParameter("submit") != null) {
-/*        System.out.println(feedbackBean.getProductId());
-        System.out.println(feedbackBean.getRating());
-        System.out.println(feedbackBean.getComment());*/
-        if (feedbackBean.validate()) {
+        AbstractUser user = (Consumer) session.getAttribute("currentSessionUser");
+        if (user == null || user.getType() != Roles.CONSUMER){ // l'utente consumatore deve essere loggato
 %>
-<!-- Syntax check is successful -> pass to new page -->
-<jsp:forward page="insert_review_success.jsp" />
+<jsp:forward page="404.jsp" />
 <%
         }
-    }
+        feedbackBean.setUsername(user.getUsername());
+        if (feedbackBean.validate()) {
+
+%>
+<!-- Syntax check is successful -> pass to new page -->
+<jsp:forward page="insert_review_summary.jsp" />
+<%
+            }
+
+        }
 %>
 
 
@@ -75,7 +79,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <div class="main-1">
         <div class="container">
             <div class="contact">
-            <h2>Insert review</h2>
+                <h2>Insert review</h2>
             </div>
             <div class="col-md-6 contact-right">
                 <form name="formInsertReview" action="insert_review.jsp" method="get">
@@ -93,15 +97,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Provide your feedback</span>
                         <textarea name="comment" cols="62" rows="8" placeholder="Comment" id="comment"></textarea>
                     </div>
-                    <input name="submit" type="submit" value="Submit">
+                    <input name="submit" type="submit" value="submit">
                     <%
                         if (request.getParameter("submit") != null) {
                     %>
-                            <tr>
-                                <td colspan=20 align="center">
-                                    <span style="color: red; ">Invalid data. Try again</span>
-                                </td>
-                            </tr>
+                    <tr>
+                        <td colspan=20 align="center">
+                            <span style="color: red; ">Invalid data. Try again</span>
+                        </td>
+                    </tr>
                     <%
                         }
                     %>

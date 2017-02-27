@@ -1,10 +1,12 @@
 <jsp:useBean id="checkoutBean" scope="session"
-             class="com.afjcjsbx.eshop.bean.CheckoutBean" />
+             class="com.afjcjsbx.eshop.bean.ManagePurchaseBean" />
 
 <!-- Set all fields of the bean -->
 <jsp:setProperty name="checkoutBean" property="*" />
 
-
+<%
+    String pid = request.getParameter("pid");
+%>
 
 <!DOCTYPE HTML>
 <html>
@@ -248,8 +250,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <fieldset>
                                     <legend>Choose delivery method</legend>
                                     <input type="radio" name="deliveryMethod" value="byCourier" id="radioCourier" checked onClick="Reveal('box_div', this)"/>Delivery by courier<br>
-                                    <input type="radio" name="deliveryMethod" value="warehouse" id="radioWarehouse" onClick="Hide('box_div', this);"/>Warehouse withdrawal<br>
                                     <input type="radio" name="deliveryMethod" value="hand" id="radioHand" onClick="Hide('box_div', this);"/>Hand delivery
+                                    <input type="hidden" name="pid" value="<%=pid%>"/>
+
                                 </fieldset>
                             </div><br><br>
 
@@ -273,6 +276,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <label for="mastercard" alt="Mastercard"><IMG src="https://www.penfinancial.com/SharedContent/images/1aMastercard.jpg" width="50" height="30"></label>
                                         <input type="radio" name="paymentMethod" value="paypal" id="paypal" onClick="Hide('mastercard_div', this); Hide('visa_div', this); Reveal('paypal_div', this)"/>
                                         <label for="paypal" alt="Paypal"><IMG src="http://www.underconsideration.com/brandnew/archives/paypal_2014_logo_detail.png" width="30" height="30"></label>
+                                        <input type="radio" name="paymentMethod" value="cod" id="cod" onClick="Hide('mastercard_div', this); Hide('visa_div', this); Reveal('cod_div', this)"/>
+                                        <label for="cod" alt="COD"><IMG src="https://d13yacurqjgara.cloudfront.net/users/66598/screenshots/1669429/icon-mock.jpg" width="30" height="30"></label>
                                     </fieldset>
                                 </div>
 
@@ -365,8 +370,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <div id="paypal_div" class="wow fadeInLeft" data-wow-delay="0.4s" style="display: none">
 
                                 </div>
-                            </div>
+                                <div id="cod_div" class="wow fadeInLeft" data-wow-delay="0.4s" style="display: none">
 
+                                </div>
+                            </div>
                             <input type="submit" value="Proceed">
                         </form>
                     </div>

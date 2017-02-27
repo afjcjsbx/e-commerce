@@ -1,10 +1,47 @@
-<!--
-Au<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+<%@ page import="com.afjcjsbx.eshop.entity.login.Consumer" %>
+<%@ page import="com.afjcjsbx.eshop.controller.feedback.ManageFeedbackController" %>
+<%@ page import="com.afjcjsbx.eshop.exceptions.DatabaseException" %>
+
+<jsp:useBean id="feedbackBean" scope="session"
+             class="com.afjcjsbx.eshop.bean.ManageFeedbackBean" />
+
+<jsp:setProperty name="feedbackBean" property="*" />
+
+<%!
+    ManageFeedbackController feedbackController = ManageFeedbackController.getInstance();
+%>
+
+
+<%
+    /**
+     * L'utente (compratore) lo ricavo dalla session, ma avrei potuto benissimo farlo inserire dall'utente
+     * e cosi' rendere la View completamente indipendente dal Model.
+     */
+    Consumer user = (Consumer) session.getAttribute("currentSessionUser");
+
+    /*System.out.println(feedbackBean.getProductId());
+    System.out.println(feedbackBean.getRating());
+    System.out.println(user.getUsername());
+    System.out.println(feedbackBean.getComment());*/
+
+
+    try {
+        feedbackController.addProductReview(feedbackBean.getProductId(),
+                user.getUsername(),
+                feedbackBean.getRating(),
+                feedbackBean.getComment());
+    } catch (DatabaseException e) {
+        e.printStackTrace();
+    }
+
+%>
+
+
+
+
+
+
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -226,181 +263,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!--contact-->
     <div class="content">
         <div class="contact">
-            <div class="container">
-                <h2>Checkout</h2>
-
-                <div class="contact-grids">
-                    <%--<div class="col-md-6 contact-left">
-                        <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below
-                            for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum
-                            et Malorum" by Cicero are also reproduced in their exact original form,
-                            accompanied by English versions from the 1914 translation by H. Rackham.</p>
-                        <address>
-                            <p>The Company Name Inc.</p>
-                            <p>7899 St Vincent Place,</p>
-                            <p>Glasgow,Le 99 Pr 45.</p>
-                            <p>Telephone : +1 800 603 6035</p>
-                            <p>FAX : +1 800 889 9898</p>
-                            <p>E-mail : <a href="mailto:example@mail.com">example@mail.com</a></p>
-                        </address>
-                    </div>--%>
-                    <script type="text/javascript">
-                        function Reveal(it, box) {
-                            var vis = (box.checked) ? "block" : "none";
-                            document.getElementById(it).style.display = vis;
-                        }
-
-                        function Hide(it, box) {
-                            var vis = (box.checked) ? "none" : "none";
-                            document.getElementById(it).style.display = vis;
-                        }
-                    </script>
-                    <div class="col-md-6 contact-right">
-                        <div id="shipment_div">
-                            <form name="formDelivery" action="checkout_success.jsp" method="get">
-                                <fieldset>
-                                    <legend>Choose delivery method</legend>
-                                    <input type="radio" name="shipment_type" value="byCourier" id="radioCourier" checked onClick="Reveal('box_div', this)"/>Delivery by courier<br>
-                                    <input type="radio" name="shipment_type" value="warehouse" id="radioWarehouse" onClick="Hide('box_div', this);"/>Warehouse withdrawal<br>
-                                    <input type="radio" name="shipment_type" value="hand" id="radioHand" onClick="Hide('box_div', this);"/>Hand delivery
-                                </fieldset>
-                            </form>
-                        </div><br><br>
-                        <div id="box_div">
-                            <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                                <span>Delivery address<label>*</label></span>
-                                <input type="text">
-                            </div><br><br>
-                            <script>
-                                $('#payment_div input:radio').addClass('input_hidden');
-                                $('#payment_div label').click(function() {
-                                    $(this).addClass('selected').siblings().removeClass('selected');
-                                });
-                            </script>
-                            <div id="payment_div">
-                                <form name="formPayment" action="checkout_success.jsp" method="get">
-                                    <fieldset>
-                                        <legend>Choose payment method</legend>
-                                        <input type="radio" name="payment_type" value="visa" id="visa" onClick="Hide('paypal_div', this); Hide('mastercard_div', this); Reveal('visa_div', this)" checked/>
-                                        <label for="visa" alt="Visa"><IMG src="https://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/0018/8364/brand.gif?itok=ODUqzu9Q" width="30" height="30"></label>
-                                        <input type="radio" name="payment_type" value="mastercard" id="mastercard" onClick="Hide('paypal_div', this); Hide('visa_div', this); Reveal('mastercard_div', this)"/>
-                                        <label for="mastercard" alt="Mastercard"><IMG src="https://www.penfinancial.com/SharedContent/images/1aMastercard.jpg" width="50" height="30"></label>
-                                        <input type="radio" name="payment_type" value="paypal" id="paypal" onClick="Hide('mastercard_div', this); Hide('visa_div', this); Reveal('paypal_div', this)"/>
-                                        <label for="paypal" alt="Paypal"><IMG src="http://www.underconsideration.com/brandnew/archives/paypal_2014_logo_detail.png" width="30" height="30"></label>
-                                    </fieldset>
-                                </form>
-                            </div>
-                            <div id="visa_div">
-                                <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                                    <span>Card number: <label>*</label></span>
-                                    <input type="number">
-                                </div><br>
-                                <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                                    <span>Expiration month: <label>*</label></span>
-                                    <FORM>
-                                        <SELECT NAME="expiration_month_visa" id="expiration_month_visa">
-                                            <option value=”1”>1</option>
-                                            <option value=”2”>2</option>
-                                            <option value=”3”>4</option>
-                                            <option value=”5”>5</option>
-                                            <option value=”6”>6</option>
-                                            <option value=”7”>7</option>
-                                            <option value=”8”>8</option>
-                                            <option value=”9”>9</option>
-                                            <option value=”10”>10</option>
-                                            <option value=”11”>11</option>
-                                            <option value=”12”>12</option>
-                                        </SELECT>
-                                    </FORM>
-                                </div><br>
-                                <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                                    <span>Expiration year: <label>*</label></span>
-                                    <FORM>
-                                        <SELECT NAME="expiration_year_visa" id="expiration_year_visa">
-                                            <option value=”2017”>2017</option>
-                                            <option value=”2018”>2018</option>
-                                            <option value=”2019”>2019</option>
-                                            <option value=”2020”>2020</option>
-                                            <option value=”2021”>2021</option>
-                                            <option value=”2022”>2022</option>
-                                            <option value=”2023”>2023</option>
-                                            <option value="2024">2024</option>
-                                            <option value=”2025”>2025</option>
-                                            <option value=”2026”>2026</option>
-                                            <option value=”2027”>2027</option>
-                                        </SELECT>
-                                    </FORM>
-                                </div><br>
-                                <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                                    <span>CVV: <label>*</label></span>
-                                    <input type="number">
-                                </div><br>
-                            </div>
-
-                            <div id="mastercard_div" style="display:none">
-                                <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                                    <span>Card number: <label>*</label></span>
-                                    <input type="number">
-                                </div><br>
-                                <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                                    <span>Expiration month: <label>*</label></span>
-                                    <FORM>
-                                        <SELECT NAME="expiration_month_mastercard" id="expiration_month_mastercard">
-                                            <option value=”1”>1</option>
-                                            <option value=”2”>2</option>
-                                            <option value=”3”>4</option>
-                                            <option value=”5”>5</option>
-                                            <option value=”6”>6</option>
-                                            <option value=”7”>7</option>
-                                            <option value=”8”>8</option>
-                                            <option value=”9”>9</option>
-                                            <option value=”10”>10</option>
-                                            <option value=”11”>11</option>
-                                            <option value=”12”>12</option>
-                                        </SELECT>
-                                    </FORM>
-                                </div><br>
-                                <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                                    <span>Expiration year: <label>*</label></span>
-                                    <FORM>
-                                        <SELECT NAME="expiration_year_mastercard" id="expiration_year_mastercard">
-                                            <option value=”2017”>2017</option>
-                                            <option value=”2018”>2018</option>
-                                            <option value=”2019”>2019</option>
-                                            <option value=”2020”>2020</option>
-                                            <option value=”2021”>2021</option>
-                                            <option value=”2022”>2022</option>
-                                            <option value=”2023”>2023</option>
-                                            <option value="2024">2024</option>
-                                            <option value=”2025”>2025</option>
-                                            <option value=”2026”>2026</option>
-                                            <option value=”2027”>2027</option>
-                                        </SELECT>
-                                    </FORM>
-                                </div><br>
-                                <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                                    <span>CVV: <label>*</label></span>
-                                    <input type="number">
-                                </div><br>
-                            </div>
-
-                            <div id="paypal_div" class="wow fadeInLeft" data-wow-delay="0.4s" style="display: none">
-                                <%--<form action="">
-                                    <fieldset>
-                                        <input type="checkbox" name="html" value="html"/> I aggre with Terms & Conditions
-                                    </fieldset>
-                                </form>--%>
-                            </div>
-                        </div>
-
-                        <input type="submit" value="Proceed">
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
+            <div class="col-md-6 contact-right">
+                <h3>Greetings! Your review was inserted correctly</h3>
             </div>
         </div>
     </div>
 
+    <br><br>
     <!--footer-->
     <div class="footer-section">
         <div class="container">

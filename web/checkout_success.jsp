@@ -1,19 +1,19 @@
-<%@ page import="com.afjcjsbx.eshop.controller.checkout.CheckoutController" %>
-<%@ page import="com.afjcjsbx.eshop.entity.login.AbstractUser" %>
+<%@ page import="com.afjcjsbx.eshop.controller.purchase.ManagePurchaseController" %>
 <%@ page import="com.afjcjsbx.eshop.entity.login.Consumer" %>
 
 <jsp:useBean id="checkoutBean" scope="session"
-             class="com.afjcjsbx.eshop.bean.CheckoutBean" />
+             class="com.afjcjsbx.eshop.bean.ManagePurchaseBean" />
 
 <%!
-    CheckoutController checkoutController = CheckoutController.getInstance();
+    ManagePurchaseController managePurchaseController = ManagePurchaseController.getInstance();
 %>
 
 <%
     Consumer user = (Consumer) session.getAttribute("currentSessionUser");
     String delivery = request.getParameter("deliveryMethod");
     String payment = request.getParameter("paymentMethod");
-    /*checkoutController.createTransaction();*/
+    managePurchaseController.startTimeout(Integer.parseInt(request.getParameter("pid")), session);
+    // TODO managePurchaseController.createTransaction();
 %>
 
 

@@ -87,7 +87,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </div>
 </div>
 <!-- login -->
-<!-- checkout -->
+<!-- purchase -->
 <%@ include file="email_subscription_toolbar.jsp" %>
 
 <!--footer-->

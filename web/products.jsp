@@ -409,7 +409,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 <!---->
-<!-- checkout -->
+<!-- purchase -->
 <%@ include file="email_subscription_toolbar.jsp" %>
 
 
