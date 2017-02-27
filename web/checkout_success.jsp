@@ -1,5 +1,4 @@
 <%@ page import="com.afjcjsbx.eshop.controller.purchase.ManagePurchaseController" %>
-<%@ page import="com.afjcjsbx.eshop.entity.login.AbstractUser" %>
 <%@ page import="com.afjcjsbx.eshop.entity.login.Consumer" %>
 
 <jsp:useBean id="checkoutBean" scope="session"
@@ -13,8 +12,8 @@
     Consumer user = (Consumer) session.getAttribute("currentSessionUser");
     String delivery = request.getParameter("deliveryMethod");
     String payment = request.getParameter("paymentMethod");
-    /*managePurchaseController.startTimeout(request.getParameter("productId"));
-    /*managePurchaseController.createTransaction();*/
+    managePurchaseController.startTimeout(Integer.parseInt(request.getParameter("pid")), session);
+    // TODO managePurchaseController.createTransaction();
 %>
 
 

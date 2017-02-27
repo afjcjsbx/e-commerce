@@ -4,7 +4,9 @@
 <!-- Set all fields of the bean -->
 <jsp:setProperty name="checkoutBean" property="*" />
 
-
+<%
+    String pid = request.getParameter("pid");
+%>
 
 <!DOCTYPE HTML>
 <html>
@@ -249,6 +251,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <legend>Choose delivery method</legend>
                                     <input type="radio" name="deliveryMethod" value="byCourier" id="radioCourier" checked onClick="Reveal('box_div', this)"/>Delivery by courier<br>
                                     <input type="radio" name="deliveryMethod" value="hand" id="radioHand" onClick="Hide('box_div', this);"/>Hand delivery
+                                    <input type="hidden" name="pid" value="<%=pid%>"/>
+
                                 </fieldset>
                             </div><br><br>
 
@@ -370,7 +374,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                                 </div>
                             </div>
-
                             <input type="submit" value="Proceed">
                         </form>
                     </div>
