@@ -5,7 +5,6 @@ public class Query {
 
     public static final String RETRIEVE_CATEGORIES = "SELECT * FROM categories";
 
-
     public static final String FIND_REGISTERED_USER = "SELECT * FROM users WHERE Mail = ? and password = ?";
 
     public static final String FIND_USER_BY_EMAIL = "SELECT * FROM users WHERE Mail = ?";
@@ -35,7 +34,7 @@ public class Query {
 
     public static final String FIND_REVIEWS_BY_USERNAME = "SELECT * FROM reviews WHERE username = ?";
 
-    public static final String FIND_SHIPMENT_STATUS = "SELECT * FROM shipments WHERE ShipmentTrack = ? and ShipmentDate = ?"; //Creato da Richard
+    public static final String FIND_SHIPMENT_STATUS = "SELECT * FROM shipments WHERE shipments.ShipmentTrack = ? and shipments.ShipmentDate = ?"; //Creato da Richard
 
     public static final String FIND_USER_BY_USERNAME = "SELECT * FROM Users WHERE Username = ?"; //Creato da Richard
 
