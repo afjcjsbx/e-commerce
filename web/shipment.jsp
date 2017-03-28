@@ -97,10 +97,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <label for="tracking">Tracking ID : </label><br>
                             <input type="text" NAME="tracking" id="tracking" required><br>
                             <label for="date">Date: </label><br>
-                            <input type="date" NAME="date" id="date" required><br><br>
+                            <input type="date" NAME="date" id="date" value="yyyy-MM-dd" required><br><br>
                             <input type="submit" name="check" value="Check"><br><br><br>
                             <% if (s != null){ %>
-                            <label>Stato : </label> <%= label %>
+                            <label><font color="black">Stato : </font></label> <font color="green"><%= label %></font>
                             <% } %>
                         </fieldset><br>
                     </form>
